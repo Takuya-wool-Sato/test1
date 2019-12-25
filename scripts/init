@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+cp .env.sample .env
+docker-compose build
+docker-compose run --rm web rails new . --force --database=mysql --skip-git --skip-test
+cp -f templates/database.yml config/database.yml
+docker-compose run --rm web spring binstub --all
+docker-compose run --rm web rails db:create

@@ -1,0 +1,81 @@
+<p id="notice"><%= notice %></p>
+<h2><%= @user.email %>がログイン中</h2>
+<h1>Tasks</h1>
+
+<table>
+<h3>未完了</h3>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>説明</th>
+      <th>完了フラグ</th>
+      <th>作成日</th>
+      <th>更新日</th>
+      <th>作成者</th>
+      <th>期限</th>
+      <th>担当者</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @undone_tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>
+        <td><%= task.is_done %></td>
+        <td><%= task.created_at %></td>
+        <td><%= task.updated_at %></td>
+        <td><%= task.email %></td>
+        <td><%= task.duedate %></td>
+        <td><%= task.assignee.email if task.assignee %></td>
+        <td><%= link_to 'Show', task %></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to '完了にする',"/tasks/#{task.id}/completed",id: task.id,method: :post %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+<table>
+<h3>完了</h3>
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>説明</th>
+      <th>完了フラグ</th>
+      <th>作成日</th>
+      <th>更新日</th>
+      <th>作成者</th>
+      <th>期限</th>
+      <th>担当者</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @done_tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.description %></td>
+        <td><%= task.is_done %></td>
+        <td><%= task.created_at %></td>
+        <td><%= task.updated_at %></td>
+        <td><%= task.email %></td>
+        <td><%= task.duedate %></td>
+        <td><%= task.assignee.email if task.assignee %></td>
+        <td><%= link_to 'Show', task %></td>
+        <td><%= link_to 'Edit', edit_task_path(task) %></td>
+        <td><%= link_to '未完了にする',"/tasks/#{task.id}/incomplete",id: task.id,method: :post %></td>
+        <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+<br>
+
+<%= link_to 'New Task', new_task_path %>

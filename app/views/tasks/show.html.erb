@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @task.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @task.description %>
+</p>
+
+<p>
+  <strong>Is done:</strong>
+  <%= @task.is_done %>
+</p>
+
+<p>
+  <strong>期日:</strong>
+  <%= @task.duedate %>
+</p>
+
+<p>
+  <strong>担当者:</strong>
+  <%= @task.assignee.email if @task.assignee %>
+</p>
+
+<h2>コメント一覧</h2>
+<% @comments.each do |c| %>
+  <div>
+    <a href="/users/<%= @task.user_id %>"><%= c.user.email %></a>
+    <%= c.content %>
+    <hr>
+  </div>
+<% end %>
+
+<%= form_with(model: [task, comment], local: true) do |form| %>
+  <div class="field">
+    <%= form.text_field :content, placeholder: 'コメントを入力...', required: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit '送信' %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>
